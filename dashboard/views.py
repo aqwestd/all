@@ -152,9 +152,25 @@ def register(request):
 
 
 
-def profile (request):  
+def profile (request):
+     homework = Homework.objects.filter(user=request.user)
+     todo = Todo.objects.filter(user=request.user)
+     if len(homework) == 0:
+          homework_done = True
+     else: 
+          homework_done = False
+     if len(todo) == 0:
+          todo_done = True
+     else: 
+          todo_done = False 
+     context ={
+          'homeworks':homework,
+          'homeworks_done':homework_done,
+          'todos':todo,
+          'todos_done': todo_done,} 
+
      
-     return render(request,'dashboard/profile.html') 
+     return render(request,'dashboard/profile.html', context) 
 
     
 
